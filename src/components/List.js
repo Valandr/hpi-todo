@@ -51,49 +51,49 @@ export default () => {
         })
     }
     const completeTask = task => {
-        const { id, isComplete } = task;
-        setLoading(true);
-        tasksApi.put(id, { isComplete: !isComplete, updatedAt: new Date().toISOString() })
-            .then(data => {
-                const newList = list
-                    .map(l => {
-                        if (l.id === id) {
-                            l.isComplete = data.isComplete;
-                            l.updatedAt = data.updatedAt;
-                        }
-                        return l;
-                    })
-                    .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
-                setList(newList);
-                setNewTask("");
-                setLoading(false);
-            });
+    const { id, isComplete } = task;
+    setLoading(true);
+    tasksApi.put(id, { isComplete: !isComplete, updatedAt: new Date().toISOString() })
+        .then(data => {
+            const newList = list
+                .map(l => {
+                    if (l.id === id) {
+                        l.isComplete = data.isComplete;
+                        l.updatedAt = data.updatedAt;
+                    }
+                    return l;
+                })
+                .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+            setList(newList);
+            setNewTask("");
+            setLoading(false);
+        });
     };
     return (
         <div>
-            <h1>Tasks</h1>
-            <hr />
-            {loading && <h2>Loading ... </h2>}
-            {!loading && <div>
-
-                <div>
-                    <NewTask newTask={newTask} setNewTask={setNewTask} addTask={addTask} />
-                </div>
-                <ul >
-                    {list
-                        .map
-                        (task =>
-                            <Task
-                                key={task.id}
-                                task={task}
-                                completeTask={completeTask}
-                                deleteTask={deleteTask}
-                            />
-                        )
-                    }
-                </ul>
+          <h1>Tasks</h1>
+          <hr />
+          {loading && <h2>Loading ... </h2>}
+          {!loading && <div>
+    
+            <div>
+              <NewTask newTask={newTask} setNewTask={setNewTask} addTask={addTask} />
             </div>
-            }
+              <ul >
+                {list
+                  .map
+                  (task => 
+                    <Task 
+                      key={task.id} 
+                      task={task} 
+                      completeTask={completeTask} 
+                      deleteTask={deleteTask} 
+                    />
+                  )
+                }
+              </ul>
+          </div>
+          }
         </div>
-    )
-}
+      )
+    }
