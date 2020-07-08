@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useFetch from "./useFetch";
 import Task from './Task';
 import NewTask from './NewTask';
+import styled from 'styled-components';
 
 export default () => {
 
@@ -25,20 +26,21 @@ export default () => {
         if (!newTask) return;
         setLoading(true);
         tasksApi
-            .post({
-                description: newTask,
-                createdAt: new Date().toISOString(),
-                isComplete: false
-            })
-            .then(data => {
-                const newList = [...list, data].sort((a, b) =>
-                    a.createdAt < b.createdAt ? 1 : -1
-                );
-                setList(newList);
-                setNewTask("");
-                setLoading(false);
-            });
+        .post({
+            description: newTask,
+            createdAt: new Date().toISOString(),
+            isComplete: false
+        })
+        .then(data => {
+            const newList = [...list, data].sort((a, b) =>
+                a.createdAt < b.createdAt ? 1 : -1
+            );
+            setList(newList);
+            setNewTask("");
+            setLoading(false);
+        });
     };
+
     const deleteTask = task => {
         const { id } = task;
         setLoading(true);
@@ -50,10 +52,11 @@ export default () => {
             setLoading(false);
         })
     }
+    
     const completeTask = task => {
-    const { id, isComplete } = task;
-    setLoading(true);
-    tasksApi.put(id, { isComplete: !isComplete, updatedAt: new Date().toISOString() })
+        const { id, isComplete } = task;
+        setLoading(true);
+        tasksApi.put(id, { isComplete: !isComplete, updatedAt: new Date().toISOString() })
         .then(data => {
             const newList = list
                 .map(l => {
@@ -69,31 +72,53 @@ export default () => {
             setLoading(false);
         });
     };
+
+    const Title = styled.h1`
+    font-size: 1.5em;
+    text-align: center;
+    color: palevioletred;
+    font-size: 45px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    `;
+
+    const ListStyle = styled.div`
+      display: flex;
+      justify-content: center;
+    `
+
+    const Ul = styled.ul`
+    list-style: none;
+    `
+
     return (
         <div>
-          <h1>Tasks</h1>
-          <hr />
-          {loading && <h2>Loading ... </h2>}
-          {!loading && <div>
-    
-            <div>
-              <NewTask newTask={newTask} setNewTask={setNewTask} addTask={addTask} />
+            <Title>Tasks</Title>
+            <hr />
+            {loading && <h2>Loading ... </h2>}
+            {!loading && <div>
+
+                <div>
+                    <NewTask newTask={newTask} setNewTask={setNewTask} addTask={addTask} />
+                </div>
+                <ListStyle>
+                    <Ul >
+                        {list
+                            .map
+                            (task =>
+                                <Task
+                                    key={task.id}
+                                    task={task}
+                                    completeTask={completeTask}
+                                    deleteTask={deleteTask}
+                                />
+                            )
+                        }
+                    </Ul>
+                </ListStyle>
             </div>
-              <ul >
-                {list
-                  .map
-                  (task => 
-                    <Task 
-                      key={task.id} 
-                      task={task} 
-                      completeTask={completeTask} 
-                      deleteTask={deleteTask} 
-                    />
-                  )
-                }
-              </ul>
-          </div>
-          }
+            }
         </div>
-      )
-    }
+    )
+}
