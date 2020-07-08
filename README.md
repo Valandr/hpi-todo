@@ -37,32 +37,56 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+# hpi-todo
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+hpi-todo is a task manager app built with React.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Technology used:
 
-### Code Splitting
+Front:
+- React
+- React Router
+- Styled-Components
+- React-Toastify
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Back:
+- Mockapi
 
-### Analyzing the Bundle Size
+## Getting started
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+The project uses Yarn as package manager.
 
-### Making a Progressive Web App
+### Start the project
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+```bash
+yarn start
+```
 
-### Advanced Configuration
+Add `:dev` to the command to start the project in dev mode.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+### Build the project
 
-### Deployment
+```bash
+yarn build
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+Add `:dev` to the command to build the project in dev mode.
 
-### `yarn build` fails to minify
+### Test the project
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```bash
+yarn test
+```
+
+Roadmap:
+
+- Todo-list récupérée depuis une Api externe
+- Tâches ordonnées en 2 blocs: tâches en cours et tâches terminées
+- Un input pour ajouter une tâche
+- Marquer une tâche comme terminée
+- Un bouton pour supprimer toutes les tâches terminées
+- Requêtes http sur l'Api externe : GET, POST, PUT, DELETE
+- Système de notification temporaire
+- Système de navigation sur 3 pages: page d'accueil, tâches terminées & sélection de thème
+- Hébergement sur Netlify
+
